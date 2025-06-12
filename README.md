@@ -39,7 +39,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 2. Exécutez le conteneur Docker :
 
    ```bash
-   docker run -p 8082:8082 -v \${PWD}:/var/www/html projet-dev
+   docker run -p 8082:8082 -v ${PWD}:/var/www/html projet-dev
    ```
 
 3. Ouvrez votre navigateur et accédez à l'application à l'adresse suivante :
