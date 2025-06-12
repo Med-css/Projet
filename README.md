@@ -17,7 +17,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 1. Clonez ce dépôt sur votre machine locale :
 
    ```bash
-   git clone https://github.com/votre-utilisateur/mon-projet-dev.git
+   git clone https://github.com/Med-css/Projet.git
    ```
    
 2. Accédez au répertoire du projet :
