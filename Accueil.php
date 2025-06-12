@@ -8,3 +8,4 @@
     </div>
     <img src="./img/imgaccueil.png" alt="" class="imgaccueil">
 </div>
+    <div class="accueilbg"></div>
