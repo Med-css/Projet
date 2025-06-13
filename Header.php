@@ -15,22 +15,29 @@
         <h1>Test</h1>
         <nav>
             <div class="headerCard" id="editingimages">
+                <a href="editimage.php">
                 <div class="cardIcon">
                     <img src="./img/editimage.png">
                     <p>Editing Images</p>
                 </div>
+                </a>
             </div>
                  <div class="headerCard" id="convertfiles">
+                <a href="convertfiles.php">
+
                 <div class="cardIcon">
                     <img src="./img/convertfile.png">
                     <p>Convert Files</p>
                 </div>
+                </a>
             </div>
                  <div class="headerCard" id="downloadvideos">
+                <a href="videodownloader.php">
                 <div class="cardIcon">
                     <img src=">
                     <p class="long-text">Download Videos</p>
-                </div>
+                </div> 
+                </a>
             </div>
             <div class="headerCard">
                 <div class="cardIcon"></div>
