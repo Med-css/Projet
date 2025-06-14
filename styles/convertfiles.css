@@ -1,0 +1,280 @@
+
+
+
+
+
+
+
+.conversion-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Sélection du type de conversion */
+.conversion-type-selection h2 {
+    text-align: center;
+    color: #4CAF50; /* Vert frais */
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+.type-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.type-button {
+    background-color: #E8F5E9; /* Vert menthe très clair */
+    color: #388E3C; /* Vert plus foncé pour le texte */
+    border: 2px solid #66BB6A; /* Bordure vert menthe */
+    padding: 15px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.type-button i {
+    font-size: 1.4em;
+}
+
+.type-button:hover {
+    background-color: #A5D6A7; /* Vert menthe un peu plus prononcé au survol */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.type-button.active {
+    background-color: #4CAF50; /* Vert plus vif pour l'état actif */
+    color: #fff;
+    border-color: #2E7D32; /* Bordure plus foncée pour l'actif */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* --- */
+
+/* Conteneur des options de conversion */
+.conversion-options-container {
+    padding: 20px;
+    border: 1px solid #C8E6C9; /* Bordure vert clair */
+    border-radius: 8px;
+    background-color: #F0F4F0; /* Fond très léger */
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.conversion-options {
+    display: none; /* Masqué par défaut, affiché via JavaScript */
+    text-align: center;
+    width: 100%;
+}
+
+.conversion-options.active {
+    display: block; /* Affiche l'option active */
+}
+
+.conversion-options h3 {
+    color: #4CAF50; /* Vert frais */
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.conversion-options p {
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: row; /* Aligne la zone de glisser-déposer et le sélecteur côte à côte */
+    justify-content: center; /* Centre les éléments */
+    align-items: flex-start; /* Alignement en haut pour éviter le décalage */
+    gap: 30px; /* Espace entre les deux colonnes */
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Permet aux éléments de s'enrouler sur des écrans plus petits */
+}
+
+/* --- */
+
+/* Zone de téléversement (à gauche) */
+.upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border: 2px dashed #A5D6A7; /* Bordure vert menthe */
+    border-radius: 10px;
+    background-color: #E8F5E9; /* Fond vert menthe très clair */
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    width: calc(50% - 15px); /* Prend environ la moitié de l'espace avec le gap */
+    max-width: 400px; /* Limite la largeur max */
+    min-height: 200px; /* Assure une hauteur suffisante */
+}
+
+.upload-area:hover {
+    background-color: #DCEDC8; /* Vert légèrement plus foncé au survol */
+    border-color: #66BB6A;
+}
+
+.upload-area i {
+    font-size: 3em;
+    color: #4CAF50; /* Vert frais */
+    margin-bottom: 15px;
+}
+
+.upload-area span {
+    font-size: 1.2em;
+    color: #388E3C; /* Vert plus foncé pour le texte */
+    text-align: center;
+}
+
+.upload-area input[type="file"] {
+    display: none; /* Masquer l'input par défaut */
+}
+
+/* --- */
+
+/* Sélection du format de conversion (à droite) */
+.conversion-format {
+    display: flex;
+    flex-direction: column; /* Aligne le texte et le sélecteur verticalement */
+    align-items: center; /* Centre horizontalement le texte et le sélecteur */
+    gap: 15px;
+    width: calc(50% - 15px); /* Prend environ la moitié de l'espace avec le gap */
+    max-width: 300px; /* Limite la largeur max */
+    padding-top: 50px; /* Ajuste la position verticale pour correspondre à la zone de téléversement */
+}
+
+.conversion-format span {
+    font-size: 1.1em;
+    color: #388E3C; /* Vert plus foncé */
+    font-weight: bold;
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #A5D6A7; /* Bordure vert menthe */
+    border-radius: 5px;
+    background-color: #fff;
+    overflow: hidden;
+    width: 100%; /* S'étend sur la largeur disponible */
+    max-width: 250px; /* Limite la largeur du selecteur */
+}
+
+.select-wrapper::after {
+    content: '\f0d7'; /* Icône de flèche vers le bas de Font Awesome */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #4CAF50; /* Flèche vert frais */
+    pointer-events: none;
+}
+
+.select-wrapper select {
+    appearance: none; /* Masquer l'apparence native du select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 10px 35px 10px 15px;
+    font-size: 1em;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #333;
+}
+
+/* --- */
+
+/* Bouton de conversion */
+.convert-button {
+    background-color: #4CAF50; /* Vert vibrant */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-weight: bold;
+    margin-top: 20px; /* Espace au-dessus du bouton */
+}
+
+.convert-button:hover {
+    background-color: #388E3C; /* Vert plus foncé au survol */
+    transform: translateY(-2px);
+}
+
+/* --- */
+
+/* Media Queries pour la responsivité */
+@media (max-width: 768px) {
+    .type-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .type-button {
+        width: 80%;
+        max-width: 250px;
+    }
+
+    .option-group {
+        flex-direction: column; /* Reviens à une colonne sur les petits écrans */
+        align-items: center; /* Centre les éléments */
+        gap: 20px; /* Réduit l'espace */
+    }
+
+    .upload-area,
+    .conversion-format {
+        width: 90%; /* Prend plus de place sur les petits écrans */
+        max-width: 400px; /* Maintient une largeur maximale raisonnable */
+        padding-top: 30px; /* Ajuste le padding */
+    }
+
+    .conversion-format {
+        padding-top: 0; /* Pas besoin de padding top sur mobile si en colonne */
+    }
+}
+
+@media (max-width: 480px) {
+    .type-button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    .upload-area {
+        padding: 30px;
+    }
+
+    .upload-area i {
+        font-size: 2.5em;
+    }
+
+    .upload-area span {
+        font-size: 1em;
+    }
+
+    .convert-button {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+}
