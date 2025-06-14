@@ -269,6 +269,9 @@ nav {
   position: relative;
   overflow: hidden;
   padding: 8px;
+    transform: translateY(-30px);
+  opacity: 0;
+  animation: cardIconFadeIn 0.3s ease forwards;
 }
 
 .headerCard:hover {
@@ -299,7 +302,19 @@ nav {
   justify-content: center;
   background-color: transparent;
   border-radius: 4px;
+
 }
+@keyframes cardIconFadeIn {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 
 .cardIcon img {
   width: 100%;
