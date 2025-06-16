@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 .conversion-section {
     display: flex;
     flex-direction: column;
@@ -145,6 +138,33 @@
 .upload-area input[type="file"] {
     display: none; /* Masquer l'input par défaut */
 }
+
+.upload-area .preview {
+    margin-top: 10px;
+    text-align: center;
+}
+.upload-area img,
+.upload-area video {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.upload-area embed {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.upload-area.dragover {
+    border: 2px dashed #4a90e2;
+    background-color: #f0f8ff;
+}
+
+.upload-area.invalid-drag {
+    border: 2px dashed #e53935; /* rouge */
+    background-color: #ffebee;
+}
+
 
 /* --- */
 

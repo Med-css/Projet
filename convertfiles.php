@@ -52,6 +52,7 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Glissez-déposez ou cliquez pour téléverser votre image</span>
                             <input type="file" id="image-input" accept="image/*" hidden>
+                            <div class="preview"></div>
                         </label>
                         <div class="conversion-format">
                             <span>Convertir en:</span>
@@ -78,6 +79,7 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Glissez-déposez ou cliquez pour téléverser votre vidéo</span>
                             <input type="file" id="video-input" accept="video/*" hidden>
+                            <div class="preview"></div>
                         </label>
                         <div class="conversion-format">
                             <span>Convertir en:</span>
@@ -103,6 +105,7 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Glissez-déposez ou cliquez pour téléverser votre audio</span>
                             <input type="file" id="audio-input" accept="audio/*" hidden>
+                            <div class="preview"></div>
                         </label>
                         <div class="conversion-format">
                             <span>Convertir en:</span>
@@ -128,6 +131,7 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Glissez-déposez ou cliquez pour téléverser votre PDF</span>
                             <input type="file" id="pdf-input" accept=".pdf" hidden>
+                            <div class="preview"></div>
                         </label>
                         <div class="conversion-format">
                             <span>Convertir en:</span>
@@ -153,6 +157,7 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Glissez-déposez ou cliquez pour téléverser votre document</span>
                             <input type="file" id="document-input" accept=".doc,.docx,.txt,.odt,.rtf" hidden>
+                            <div class="preview"></div>
                         </label>
                         <div class="conversion-format">
                             <span>Convertir en:</span>
@@ -177,6 +182,7 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Glissez-déposez ou cliquez pour téléverser votre archive</span>
                             <input type="file" id="archive-input" accept=".zip,.rar,.7z,.tar" hidden>
+                            <div class="preview"></div>
                         </label>
                         <div class="conversion-format">
                             <span>Convertir en:</span>
@@ -229,8 +235,134 @@
         if (defaultButton) {
             defaultButton.click();
         }
+
+        const dropZones = document.querySelectorAll('.upload-area');
+
+        // Extensions valides par type de champ
+        const validExtensions = {
+            'image-input': ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'tiff'],
+            'video-input': ['mp4', 'avi', 'mov', 'webm', 'mkv'],
+            'audio-input': ['mp3', 'wav', 'flac', 'ogg', 'aac'],
+            'pdf-input': ['pdf'],
+            'document-input': ['doc', 'docx', 'txt', 'odt', 'rtf'],
+            'archive-input': ['zip', 'rar', '7z', 'tar']
+        };
+
+        // juste sous validExtensions
+        const extMap = {
+            'mpeg': 'mp3',
+            'plain': 'txt',
+            'vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+            'x-zip-compressed': 'zip',
+            'x-compressed': 'rar',
+            'x-tar': 'tar'
+        };
+
+
+        dropZones.forEach(zone => {
+            const input = zone.querySelector('input[type="file"]');
+            const allowed = validExtensions[input.id];
+            const preview = zone.querySelector('.preview');
+            const icon = zone.querySelector('i');
+            const span = zone.querySelector('span');
+
+            // Drag over
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+
+                const items = e.dataTransfer.items;
+                if (!items.length) {
+                    zone.classList.add('invalid-drag');
+                    return;
+                }
+
+                // essaie de récupérer le nom
+                let ext = null;
+                const fileItem = items[0].getAsFile();
+                if (fileItem) {
+                    ext = fileItem.name.split('.').pop().toLowerCase();
+                } else {
+                    // fallback : on utilise le MIME type (ex: 'image/png')
+                    const mime = items[0].type;
+                    ext = mime.split('/').pop().toLowerCase();
+                }
+
+                ext = extMap[ext] || ext;
+
+                console.log(`Extension détectée : ${ext}`);
+
+                if (allowed.includes(ext)) {
+                    zone.classList.remove('invalid-drag');
+                } else {
+                    zone.classList.add('invalid-drag');
+                }
+            });
+
+            // Drag leave
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+                zone.classList.remove('invalid-drag');
+            });
+
+            // Drop
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                zone.classList.remove('invalid-drag');
+                const file = e.dataTransfer.files[0];
+                if (!file) return;
+
+                const inputId = input.id;
+                const fileExt = file.name.split('.').pop().toLowerCase();
+
+                preview.innerHTML = '';
+                span.style.display = 'none';
+                icon.style.display = 'none';
+
+                if (!allowed.includes(fileExt)) {
+                    preview.innerHTML = `<p style="color: red;">Extension invalide : ${file.name}</p>`;
+                    input.value = ''; // Reset le champ fichier
+                    span.style.display = '';
+                    icon.style.display = '';
+                    return;
+                }
+
+                // Afficher l'aperçu selon le type
+                const fileURL = URL.createObjectURL(file);
+                let element;
+
+                if (file.type.startsWith('image/')) {
+                    element = document.createElement('img');
+                    element.src = fileURL;
+                    element.style.maxWidth = '100%';
+                    element.style.maxHeight = '200px';
+                } else if (file.type.startsWith('video/')) {
+                    element = document.createElement('video');
+                    element.src = fileURL;
+                    element.controls = true;
+                    element.style.maxWidth = '100%';
+                    element.style.maxHeight = '200px';
+                } else if (file.type.startsWith('audio/')) {
+                    element = document.createElement('audio');
+                    element.src = fileURL;
+                    element.controls = true;
+                } else if (file.type === 'application/pdf') {
+                    element = document.createElement('embed');
+                    element.src = fileURL;
+                    element.type = 'application/pdf';
+                    element.style.width = '100%';
+                    element.style.height = '200px';
+                } else {
+                    element = document.createElement('p');
+                    element.textContent = `Fichier : ${file.name}`;
+                }
+
+                preview.appendChild(element);
+                input.files = e.dataTransfer.files; // Charger le fichier dans l'input
+            });
+        });
     });
 </script>
-
 
 <?php require 'Footer.php'; ?>
