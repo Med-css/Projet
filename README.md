@@ -30,18 +30,20 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 
 ## Utilisation
 
-1. Construisez l'image Docker :
+1. Exécutez le conteneur Docker :
 
    ```bash
-   docker build -t projet-dev .
-   ```
-   
-2. Exécutez le conteneur Docker :
-
-   ```bash
-   docker run -p 8082:8082 -v ${PWD}:/var/www/html projet-dev
+   docker compose up -d
    ```
 
-3. Ouvrez votre navigateur et accédez à l'application à l'adresse suivante :
+2. Ouvrez votre navigateur et accédez à l'application à l'adresse suivante :
 
    - [http://localhost:8082/](http://localhost:8082/)
+
+<br />
+
+3. Arrêter le docker :
+
+   ```bash
+   docker compose down -v
+   ```

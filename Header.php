@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    
+    <title><?= isset($pageTitle) ? $pageTitle : 'Home Page' ?></title>
+    <meta name="description" content="<?= isset($pageDescription) ? $pageDescription : 'A collection of tools for editing images, converting files, and downloading videos.' ?>">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -14,12 +17,12 @@
 </head>
 <body>
     <header>
-        <h1>Test</h1>
+        <h1>Menu</h1>
         <nav>
             <div class="headerCard" id="editingimages">
                 <a href="editimage.php">
                 <div class="cardIcon">
-                    <img src="./img/editimage.png">
+                    <img src="./img/editimage.png" alt="Editing Images Icon">
                     <p>Editing Images</p>
                 </div>
                 </a>
@@ -28,7 +31,7 @@
                 <a href="convertfiles.php">
 
                 <div class="cardIcon">
-                    <img src="./img/convertfile.png">
+                    <img src="./img/convertfile.png" alt="Convert Files Icon">
                     <p>Convert Files</p>
                 </div>
                 </a>
@@ -36,9 +39,9 @@
                  <div class="headerCard" id="downloadvideos">
                 <a href="videodownloader.php">
                 <div class="cardIcon">
-                    <img src=">
+                    <img src="./img/videodownloader.png" alt="Download Videos Icon">
                     <p class="long-text">Download Videos</p>
-                </div> 
+                </div>
                 </a>
             </div>
             <div class="headerCard">
@@ -59,8 +62,6 @@
         </nav>
     </header>
 
-
-    
     <script>
         // Script pour ajuster automatiquement la taille du texte selon sa longueur
         document.addEventListener('DOMContentLoaded', function() {

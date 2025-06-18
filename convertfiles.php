@@ -1,6 +1,10 @@
-<?php require 'Header.php'; ?>
+<?php
+$pageTitle = 'Convert Files';
+$pageDescription = 'Convert various file types including images, videos, audio, PDFs, documents, and archives. Easily upload and convert files to your desired format.';
+require 'Header.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="styles/convertfiles.css">
+
 <main>
     <div class="titlePage convertimg">
         <img src="./img/convertfile/imgtriangle.png" alt="Image de la page" class="triangleimg">
@@ -9,7 +13,7 @@
         <img src="./img/convertfile/imgtriangleinverse.png" alt="Image de la page" class="imgtriangleinverse">
 
         <h1>Convertir un fichier.</h1>
-        
+
     </div>
  <div class="contentPage">
         <section class="conversion-section">
@@ -47,161 +51,177 @@
                 <div class="conversion-options active" id="image-options">
                     <h3>Convertir une image</h3>
                     <p>Sélectionnez le format de sortie pour votre image.</p>
-                    <div class="option-group">
-                        <label for="image-input" class="upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Glissez-déposez ou cliquez pour téléverser votre image</span>
-                            <input type="file" id="image-input" accept="image/*" hidden>
-                            <div class="preview"></div>
-                        </label>
-                        <div class="conversion-format">
-                            <span>Convertir en:</span>
-                            <div class="select-wrapper">
-                                <select id="image-format">
-                                    <option value="jpg">JPG</option>
-                                    <option value="png">PNG</option>
-                                    <option value="webp">WEBP</option>
-                                    <option value="avif">AVIF</option>
-                                    <option value="gif">GIF</option>
-                                    <option value="tiff">TIFF</option>
-                                </select>
+                    <form method="post" enctype="multipart/form-data" action="">
+                        <input type="hidden" name="type" value="image">
+                        <div class="option-group">
+                            <label for="image-input" class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Glissez-déposez ou cliquez pour téléverser votre image</span>
+                                <input type="file" id="image-input" name="file" accept="image/*" hidden>
+                                <div class="preview"></div>
+                            </label>
+                            <div class="conversion-format">
+                                <span>Convertir en:</span>
+                                <div class="select-wrapper">
+                                    <select id="image-format" name="format">
+                                        <option value="jpg">JPG</option>
+                                        <option value="png">PNG</option>
+                                        <option value="webp">WEBP</option>
+                                        <option value="avif">AVIF</option>
+                                        <option value="gif">GIF</option>
+                                        <option value="tiff">TIFF</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="convert-button">Convertir</button>
+                        <button type="submit" class="convert-button">Convertir</button>
+                    </form>
                 </div>
 
                 <div class="conversion-options" id="video-options">
                     <h3>Convertir une vidéo</h3>
                     <p>Sélectionnez le format de sortie pour votre vidéo.</p>
-                    <div class="option-group">
-                        <label for="video-input" class="upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Glissez-déposez ou cliquez pour téléverser votre vidéo</span>
-                            <input type="file" id="video-input" accept="video/*" hidden>
-                            <div class="preview"></div>
-                        </label>
-                        <div class="conversion-format">
-                            <span>Convertir en:</span>
-                            <div class="select-wrapper">
-                                <select id="video-format">
-                                    <option value="mp4">MP4</option>
-                                    <option value="avi">AVI</option>
-                                    <option value="mov">MOV</option>
-                                    <option value="webm">WEBM</option>
-                                    <option value="mkv">MKV</option>
-                                </select>
+                    <form method="post" enctype="multipart/form-data" action="">
+                        <input type="hidden" name="type" value="video">
+                        <div class="option-group">
+                            <label for="video-input" class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Glissez-déposez ou cliquez pour téléverser votre vidéo</span>
+                                <input type="file" id="video-input" name="file" accept="video/*" hidden>
+                                <div class="preview"></div>
+                            </label>
+                            <div class="conversion-format">
+                                <span>Convertir en:</span>
+                                <div class="select-wrapper">
+                                    <select id="video-format" name="format">
+                                        <option value="mp4">MP4</option>
+                                        <option value="avi">AVI</option>
+                                        <option value="mov">MOV</option>
+                                        <option value="webm">WEBM</option>
+                                        <option value="mkv">MKV</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="convert-button">Convertir</button>
+                        <button type="submit" class="convert-button">Convertir</button>
+                    </form>
                 </div>
 
                 <div class="conversion-options" id="audio-options">
                     <h3>Convertir un fichier audio</h3>
                     <p>Sélectionnez le format de sortie pour votre fichier audio.</p>
-                    <div class="option-group">
-                        <label for="audio-input" class="upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Glissez-déposez ou cliquez pour téléverser votre audio</span>
-                            <input type="file" id="audio-input" accept="audio/*" hidden>
-                            <div class="preview"></div>
-                        </label>
-                        <div class="conversion-format">
-                            <span>Convertir en:</span>
-                            <div class="select-wrapper">
-                                <select id="audio-format">
-                                    <option value="mp3">MP3</option>
-                                    <option value="wav">WAV</option>
-                                    <option value="flac">FLAC</option>
-                                    <option value="ogg">OGG</option>
-                                    <option value="aac">AAC</option>
-                                </select>
+                    <form method="post" enctype="multipart/form-data" action="">
+                        <input type="hidden" name="type" value="audio">
+                        <div class="option-group">
+                            <label for="audio-input" class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Glissez-déposez ou cliquez pour téléverser votre audio</span>
+                                <input type="file" id="audio-input" name="file" accept="audio/*" hidden>
+                                <div class="preview"></div>
+                            </label>
+                            <div class="conversion-format">
+                                <span>Convertir en:</span>
+                                <div class="select-wrapper">
+                                    <select id="audio-format" name="format">
+                                        <option value="mp3">MP3</option>
+                                        <option value="wav">WAV</option>
+                                        <option value="flac">FLAC</option>
+                                        <option value="ogg">OGG</option>
+                                        <option value="aac">AAC</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="convert-button">Convertir</button>
+                        <button type="submit" class="convert-button">Convertir</button>
+                    </form>
                 </div>
 
                 <div class="conversion-options" id="pdf-options">
                     <h3>Convertir un fichier PDF</h3>
                     <p>Sélectionnez le format de sortie pour votre PDF.</p>
-                    <div class="option-group">
-                        <label for="pdf-input" class="upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Glissez-déposez ou cliquez pour téléverser votre PDF</span>
-                            <input type="file" id="pdf-input" accept=".pdf" hidden>
-                            <div class="preview"></div>
-                        </label>
-                        <div class="conversion-format">
-                            <span>Convertir en:</span>
-                            <div class="select-wrapper">
-                                <select id="pdf-format">
-                                    <option value="docx">DOCX</option>
-                                    <option value="jpg">JPG</option>
-                                    <option value="png">PNG</option>
-                                    <option value="txt">TXT</option>
-                                    <option value="html">HTML</option>
-                                </select>
+                    <form method="post" enctype="multipart/form-data" action="">
+                        <input type="hidden" name="type" value="pdf">
+                        <div class="option-group">
+                            <label for="pdf-input" class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Glissez-déposez ou cliquez pour téléverser votre PDF</span>
+                                <input type="file" id="pdf-input" name="file" accept=".pdf" hidden>
+                                <div class="preview"></div>
+                            </label>
+                            <div class="conversion-format">
+                                <span>Convertir en:</span>
+                                <div class="select-wrapper">
+                                    <select id="pdf-format" name="format">
+                                        <option value="docx">DOCX</option>
+                                        <option value="jpg">JPG</option>
+                                        <option value="png">PNG</option>
+                                        <option value="txt">TXT</option>
+                                        <option value="html">HTML</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="convert-button">Convertir</button>
+                        <button type="submit" class="convert-button">Convertir</button>
+                    </form>
                 </div>
 
                 <div class="conversion-options" id="document-options">
                     <h3>Convertir un document</h3>
                     <p>Sélectionnez le format de sortie pour votre document.</p>
-                    <div class="option-group">
-                        <label for="document-input" class="upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Glissez-déposez ou cliquez pour téléverser votre document</span>
-                            <input type="file" id="document-input" accept=".doc,.docx,.txt,.odt,.rtf" hidden>
-                            <div class="preview"></div>
-                        </label>
-                        <div class="conversion-format">
-                            <span>Convertir en:</span>
-                            <div class="select-wrapper">
-                                <select id="document-format">
-                                    <option value="pdf">PDF</option>
-                                    <option value="txt">TXT</option>
-                                    <option value="html">HTML</option>
-                                    <option value="odt">ODT</option>
-                                </select>
+                    <form method="post" enctype="multipart/form-data" action="">
+                        <input type="hidden" name="type" value="document">
+                        <div class="option-group">
+                            <label for="document-input" class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Glissez-déposez ou cliquez pour téléverser votre document</span>
+                                <input type="file" id="document-input" name="file" accept=".doc,.docx,.txt,.odt,.rtf" hidden>
+                                <div class="preview"></div>
+                            </label>
+                            <div class="conversion-format">
+                                <span>Convertir en:</span>
+                                <div class="select-wrapper">
+                                    <select id="document-format" name="format">
+                                        <option value="pdf">PDF</option>
+                                        <option value="txt">TXT</option>
+                                        <option value="html">HTML</option>
+                                        <option value="odt">ODT</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="convert-button">Convertir</button>
+                        <button type="submit" class="convert-button">Convertir</button>
+                    </form>
                 </div>
 
                 <div class="conversion-options" id="archive-options">
                     <h3>Convertir une archive</h3>
                     <p>Sélectionnez le format de sortie pour votre archive.</p>
-                    <div class="option-group">
-                        <label for="archive-input" class="upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Glissez-déposez ou cliquez pour téléverser votre archive</span>
-                            <input type="file" id="archive-input" accept=".zip,.rar,.7z,.tar" hidden>
-                            <div class="preview"></div>
-                        </label>
-                        <div class="conversion-format">
-                            <span>Convertir en:</span>
-                            <div class="select-wrapper">
-                                <select id="archive-format">
-                                    <option value="zip">ZIP</option>
-                                    <option value="rar">RAR</option>
-                                    <option value="7z">7Z</option>
-                                    <option value="tar">TAR</option>
-                                </select>
+                    <form method="post" enctype="multipart/form-data" action="">
+                        <input type="hidden" name="type" value="archive">
+                        <div class="option-group">
+                            <label for="archive-input" class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Glissez-déposez ou cliquez pour téléverser votre archive</span>
+                                <input type="file" id="archive-input" name="file" accept=".zip,.rar,.7z,.tar" hidden>
+                                <div class="preview"></div>
+                            </label>
+                            <div class="conversion-format">
+                                <span>Convertir en:</span>
+                                <div class="select-wrapper">
+                                    <select id="archive-format" name="format">
+                                        <option value="zip">ZIP</option>
+                                        <option value="7z">7Z</option>
+                                        <option value="tar">TAR</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="convert-button">Convertir</button>
+                        <button type="submit" class="convert-button">Convertir</button>
+                    </form>
                 </div>
             </div>
         </section>
     </div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -229,6 +249,43 @@
             });
         });
 
+        document.querySelectorAll('.convert-button').forEach(button => {
+            button.addEventListener('click', async function () {
+                const section = button.closest('.conversion-options');
+                const input = section.querySelector('input[type="file"]');
+                const select = section.querySelector('select');
+                const type = section.id.replace('-options', '');
+                const file = input.files[0];
+
+                if (!file) return alert("Veuillez sélectionner un fichier.");
+
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('type', type);
+                formData.append('format', select.value);
+
+                const res = await fetch('convert.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (res.ok) {
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${file.name.split('.')[0]}.${select.value}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                } else {
+                    const errorText = await res.text();
+                    alert("Erreur de conversion : " + errorText);
+                }
+            });
+        });
+
+
         // Optionnel: Afficher la section "Image" par défaut au chargement de la page
         // Trouvez le bouton "Image" et simulez un clic
         const defaultButton = document.querySelector('.type-button[data-type="image"]');
@@ -253,11 +310,31 @@
             'mpeg': 'mp3',
             'plain': 'txt',
             'vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+            'vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
+            'vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+            'vnd.ms-excel': 'xls',
+            'vnd.ms-powerpoint': 'ppt',
+            'vnd.oasis.opendocument.text': 'odt',
+            'vnd.oasis.opendocument.spreadsheet': 'ods',
+            'vnd.oasis.opendocument.presentation': 'odp',
+            'vnd.oasis.opendocument.graphics': 'odg',
+            'vnd.oasis.opendocument.formula': 'odf',
+            'vnd.oasis.opendocument.chart': 'odc',
+            'vnd.oasis.opendocument.image': 'odi',
+            'vnd.oasis.opendocument.text-master': 'odm',
+            'vnd.oasis.opendocument.text-web': 'odt',
+            'vnd.oasis.opendocument.text-template': 'odt',
+            'msword' : 'doc',
+            'x-msdownload': 'exe',
             'x-zip-compressed': 'zip',
-            'x-compressed': 'rar',
-            'x-tar': 'tar'
+            'x-tar': 'tar',
+            'x-7z-compressed': '7z',
+            'x-rar-compressed': 'rar',
+            'x-gzip': 'gz',
+            'x-bzip2': 'bz2',
+            'x-compressed': 'zip',
+            'x-archive': 'zip',
         };
-
 
         dropZones.forEach(zone => {
             const input = zone.querySelector('input[type="file"]');
@@ -265,6 +342,82 @@
             const preview = zone.querySelector('.preview');
             const icon = zone.querySelector('i');
             const span = zone.querySelector('span');
+
+            input.addEventListener('change', e => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                // Extraction et normalisation de l'extension
+                let ext = file.name.split('.').pop().toLowerCase();
+                ext = extMap[ext] || ext;
+
+                // Récupération des éléments
+                const formatContainer = zone.closest('.option-group').querySelector('.conversion-format');
+                const convertSpan    = formatContainer.querySelector('span');
+                const select         = formatContainer.querySelector('select');
+
+                // 1) Mise à jour du <span>
+                convertSpan.textContent = `Convertir (${ext}) en :`;
+
+                // 2) Réactivation de toutes les options, puis masquage de celle de l'extension source
+                Array.from(select.options).forEach(opt => opt.hidden = false);
+                const toHide = Array.from(select.options).find(opt => opt.value.toLowerCase() === ext);
+                if (toHide) toHide.hidden = true;
+
+                // 3) Choix de la première option visible
+                const firstVisibleIndex = Array.from(select.options).findIndex(opt => !opt.hidden);
+
+                if (firstVisibleIndex >= 0) {
+                    select.selectedIndex = firstVisibleIndex;
+                }
+
+                // 4) Réinitialisation de l'aperçu et de l'UI du drop-zone
+                preview.innerHTML    = '';
+                span.style.display   = 'none';
+                icon.style.display   = 'none';
+
+                // 5) Vérification de validité de l'extension
+                if (!allowed.includes(ext)) {
+                    preview.innerHTML = `<p style="color: red;">Extension invalide : ${file.name}</p>`;
+                    input.value = '';           // reset pour pouvoir re-sélectionner
+                    span.style.display = 'none';
+                    icon.style.display = 'none';
+                    return;
+                }
+
+                // 6) Affichage de l'aperçu
+                const url = URL.createObjectURL(file);
+                let element;
+                if (file.type.startsWith('image/')) {
+                    element = document.createElement('img');
+                    element.src = url;
+                    element.style.maxWidth  = '100%';
+                    element.style.maxHeight = '200px';
+                } else if (file.type.startsWith('video/')) {
+                    element = document.createElement('video');
+                    element.src = url;
+                    element.controls = true;
+                    element.style.maxWidth  = '100%';
+                    element.style.maxHeight = '200px';
+                } else if (file.type.startsWith('audio/')) {
+                    element = document.createElement('audio');
+                    element.src = url;
+                    element.controls = true;
+                } else if (file.type === 'application/pdf') {
+                    element = document.createElement('embed');
+                    element.src  = url;
+                    element.type = 'application/pdf';
+                    element.style.width  = '100%';
+                    element.style.height = '200px';
+                } else {
+                    element = document.createElement('p');
+                    element.textContent = `Fichier : ${file.name}`;
+                }
+                preview.appendChild(element);
+
+                // 7) Charger le fichier dans l'input pour soumission éventuelle
+                input.files = e.target.files;
+            });
 
             // Drag over
             zone.addEventListener('dragover', e => {
@@ -290,10 +443,9 @@
 
                 ext = extMap[ext] || ext;
 
-                console.log(`Extension détectée : ${ext}`);
-
                 if (allowed.includes(ext)) {
                     zone.classList.remove('invalid-drag');
+
                 } else {
                     zone.classList.add('invalid-drag');
                 }
@@ -310,11 +462,29 @@
                 e.preventDefault();
                 zone.classList.remove('dragover');
                 zone.classList.remove('invalid-drag');
+
                 const file = e.dataTransfer.files[0];
                 if (!file) return;
 
-                const inputId = input.id;
+                // Extension
                 const fileExt = file.name.split('.').pop().toLowerCase();
+
+                const optionGroup     = zone.closest('.option-group');
+                const formatContainer = optionGroup.querySelector('.conversion-format');
+                const convertSpan     = formatContainer.querySelector('span');
+                const select          = formatContainer.querySelector('select');
+
+                convertSpan.textContent = `Convertir (${fileExt}) en :`;
+
+                Array.from(select.options).forEach(opt => opt.hidden = false);
+
+                const toHide = Array.from(select.options).find(opt => opt.value.toLowerCase() === fileExt);
+                if (toHide) toHide.hidden = true;
+
+                const firstVisibleIndex = Array.from(select.options).findIndex(opt => !opt.hidden);
+                if (firstVisibleIndex >= 0) {
+                    select.selectedIndex = firstVisibleIndex;
+                }
 
                 preview.innerHTML = '';
                 span.style.display = 'none';
@@ -322,16 +492,14 @@
 
                 if (!allowed.includes(fileExt)) {
                     preview.innerHTML = `<p style="color: red;">Extension invalide : ${file.name}</p>`;
-                    input.value = ''; // Reset le champ fichier
+                    input.value = '';
                     span.style.display = '';
                     icon.style.display = '';
                     return;
                 }
 
-                // Afficher l'aperçu selon le type
                 const fileURL = URL.createObjectURL(file);
                 let element;
-
                 if (file.type.startsWith('image/')) {
                     element = document.createElement('img');
                     element.src = fileURL;
@@ -357,10 +525,11 @@
                     element = document.createElement('p');
                     element.textContent = `Fichier : ${file.name}`;
                 }
-
                 preview.appendChild(element);
-                input.files = e.dataTransfer.files; // Charger le fichier dans l'input
+
+                input.files = e.dataTransfer.files;
             });
+
         });
     });
 </script>

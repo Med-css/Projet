@@ -1,3 +1,0 @@
-docker build -t projet-dev .
-docker run -p 8082:8082 -v ${PWD}:/var/www/html projet-dev
-http://localhost:8082/
