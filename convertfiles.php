@@ -103,7 +103,7 @@ require 'Header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="convert-button">Convertir</button>
+                        <button type="button" class="convert-button">Convertir</button>
                     </form>
                 </div>
 
@@ -132,7 +132,7 @@ require 'Header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="convert-button">Convertir</button>
+                        <button type="button" class="convert-button">Convertir</button>
                     </form>
                 </div>
 
@@ -161,7 +161,7 @@ require 'Header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="convert-button">Convertir</button>
+                        <button type="button" class="convert-button">Convertir</button>
                     </form>
                 </div>
 
@@ -189,7 +189,7 @@ require 'Header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="convert-button">Convertir</button>
+                        <button type="button" class="convert-button">Convertir</button>
                     </form>
                 </div>
 
@@ -216,7 +216,7 @@ require 'Header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="convert-button">Convertir</button>
+                        <button type="button" class="convert-button">Convertir</button>
                     </form>
                 </div>
             </div>
@@ -250,7 +250,9 @@ require 'Header.php'; ?>
         });
 
         document.querySelectorAll('.convert-button').forEach(button => {
-            button.addEventListener('click', async function () {
+            button.addEventListener('click', async function (event) {
+                event.preventDefault();
+
                 const section = button.closest('.conversion-options');
                 const input = section.querySelector('input[type="file"]');
                 const select = section.querySelector('select');
@@ -264,26 +266,62 @@ require 'Header.php'; ?>
                 formData.append('type', type);
                 formData.append('format', select.value);
 
-                const res = await fetch('convert.php', {
-                    method: 'POST',
-                    body: formData
+                // Sauvegarder l'état d'origine
+                const originalText = button.innerHTML;
+                button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Conversion...`;
+
+                // Sélectionner tous les boutons et les liens
+                const allButtons = document.querySelectorAll('button, .convert-button');
+                const allLinks = document.querySelectorAll('a');
+
+                // Désactiver les boutons
+                allButtons.forEach(btn => btn.disabled = true);
+
+                // Désactiver les liens en les bloquant temporairement
+                allLinks.forEach(link => {
+                    link.setAttribute('data-href', link.getAttribute('href'));
+                    link.setAttribute('href', '#');
+                    link.classList.add('disabled-link'); // pour éventuel style CSS
                 });
 
-                if (res.ok) {
-                    const blob = await res.blob();
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `${file.name.split('.')[0]}.${select.value}`;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                } else {
-                    const errorText = await res.text();
-                    alert("Erreur de conversion : " + errorText);
+                try {
+                    const res = await fetch('convert', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (res.ok) {
+                        const blob = await res.blob();
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${file.name.split('.')[0]}.${select.value}`;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                    } else {
+                        const errorText = await res.text();
+                        alert("Erreur de conversion : " + errorText);
+                    }
+                } catch (err) {
+                    alert("Erreur réseau : " + err.message);
+                } finally {
+                    // Restaurer tous les éléments
+                    button.innerHTML = originalText;
+                    allButtons.forEach(btn => btn.disabled = false);
+
+                    allLinks.forEach(link => {
+                        const originalHref = link.getAttribute('data-href');
+                        if (originalHref) {
+                            link.setAttribute('href', originalHref);
+                            link.removeAttribute('data-href');
+                        }
+                        link.classList.remove('disabled-link');
+                    });
                 }
             });
         });
+
 
 
         // Optionnel: Afficher la section "Image" par défaut au chargement de la page

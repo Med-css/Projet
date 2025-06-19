@@ -20,44 +20,75 @@
         <h1>Menu</h1>
         <nav>
             <div class="headerCard" id="editingimages">
-                <a href="editimage.php">
-                <div class="cardIcon">
-                    <img src="./img/editimage.png" alt="Editing Images Icon">
-                    <p>Editing Images</p>
-                </div>
+                <a href="editimage">
+                    <div class="cardIcon">
+                        <img src="./img/editimage.png" alt="Editing Images Icon">
+                        <p>Editing Images</p>
+                    </div>
                 </a>
             </div>
-                 <div class="headerCard" id="convertfiles">
-                <a href="convertfiles.php">
+            
+            <div class="headerCard" id="convertfiles">
+                <a href="convertfiles">
+                    <div class="cardIcon">
+                        <img src="./img/convertfile.png" alt="Convert Files Icon">
+                        <p>Convert Files</p>
+                    </div>
+                </a>
+            </div>
 
-                <div class="cardIcon">
-                    <img src="./img/convertfile.png" alt="Convert Files Icon">
-                    <p>Convert Files</p>
-                </div>
+            <div class="headerCard" id="downloadvideos">
+                <a href="videodownloader">
+                    <div class="cardIcon">
+                        <img src="./img/videodownloader.png" alt="Download Videos Icon">
+                        <p>Download Videos</p>
+                    </div>
                 </a>
             </div>
-                 <div class="headerCard" id="downloadvideos">
-                <a href="videodownloader.php">
-                <div class="cardIcon">
-                    <img src="./img/videodownloader.png" alt="Download Videos Icon">
-                    <p class="long-text">Download Videos</p>
-                </div>
+
+            <div class="headerCard">
+                <a href="#">
+                    <div class="cardIcon" style="display: none;">
+                        <img src="./img/editimage.png" alt="Other Tools Icon">
+                        <p>Other Tools</p>
+                    </div>
                 </a>
             </div>
+
             <div class="headerCard">
-                <div class="cardIcon"></div>
+                <a href="#">
+                    <div class="cardIcon" style="display: none;">
+                        <img src="./img/editimage.png" alt="Other Tools Icon">
+                        <p>Other Tools</p>
+                    </div>
+                </a>
             </div>
+
             <div class="headerCard">
-                <div class="cardIcon"></div>
+                <a href="#">
+                    <div class="cardIcon" style="display: none;">
+                        <img src="./img/editimage.png" alt="Other Tools Icon">
+                        <p>Other Tools</p>
+                    </div>
+                </a>
             </div>
+
             <div class="headerCard">
-                <div class="cardIcon"></div>
+                <a href="#">
+                    <div class="cardIcon" style="display: none;">
+                        <img src="./img/editimage.png" alt="Other Tools Icon">
+                        <p>Other Tools</p>
+                    </div>
+                </a>
             </div>
+
             <div class="headerCard">
-                <div class="cardIcon"></div>
-            </div>
-            <div class="headerCard">
-                <div class="cardIcon"></div>
+                <a href="#">
+                    <div class="cardIcon" style="display: none;">
+                        <img src="./img/editimage.png" alt="Other Tools Icon">
+                        <p>Other Tools</p>
+                    </div>
+                </a>
             </div>
         </nav>
     </header>

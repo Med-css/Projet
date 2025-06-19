@@ -57,6 +57,12 @@ header {
 footer{
   margin-top: 5em;
   clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%);
+  background-color: #f0f0f0; /* Light grey, matching your site's background or a slightly darker shade for contrast */
+  color: #333; /* Dark grey for text */
+  padding: 4em 0 2em; /* Adjust padding top to account for the clip-path cutting off the top */
+  font-family: Arial, sans-serif; /* Use a clean, sans-serif font */
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* Subtle shadow for depth */
+  position: relative;
   z-index: 10;
 }
 
@@ -140,17 +146,6 @@ footer{
   margin-top: 3em;
 }
 
-footer {
-  margin-top: 5em;
-  clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%);
-  background-color: #f0f0f0; /* Light grey, matching your site's background or a slightly darker shade for contrast */
-  color: #333; /* Dark grey for text */
-  padding: 4em 0 2em; /* Adjust padding top to account for the clip-path cutting off the top */
-  font-family: Arial, sans-serif; /* Use a clean, sans-serif font */
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* Subtle shadow for depth */
-  position: relative; /* Needed for the clip-path to work consistently */
-}
-
 .footer-content {
   display: flex;
   justify-content: space-around;
@@ -211,6 +206,12 @@ footer {
 .creator-name {
   font-weight: bold;
   color: #444;
+}
+
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: default;
 }
 
 .footer-bottom {

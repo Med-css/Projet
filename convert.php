@@ -55,7 +55,7 @@ switch ($type) {
                 break;
             default:
                 http_response_code(400);
-                echo "Format d’archive non supporté en entrée.";
+                echo "Format d'archive non supporté en entrée.";
                 exit;
         }
 
