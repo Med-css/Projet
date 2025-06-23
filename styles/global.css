@@ -98,6 +98,14 @@ footer{
     linear-gradient(to right, #b9fbc0 1px, transparent 1px),
     linear-gradient(to bottom, #b9fbc0 1px, transparent 1px);
 }
+.mockupgenerator{
+  border-bottom: 2px solid #FFF5E1;
+  background-image:
+  linear-gradient(to right, #FFCB90 1px, transparent 1px),
+  linear-gradient(to bottom, #FFCB90 1px, transparent 1px);
+  background-color: #FFF9F0;
+
+}
 
 .titlePage h1 {
   z-index: 100;
