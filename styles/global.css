@@ -145,7 +145,6 @@ footer{
   justify-content: center;
   margin-top: 3em;
 }
-
 .footer-content {
   display: flex;
   justify-content: space-around;
@@ -157,7 +156,6 @@ footer{
 
 .footer-section {
   flex: 1;
-  min-width: 250px;
   margin: 1em;
 }
 
@@ -209,9 +207,9 @@ footer{
 }
 
 .disabled-link {
-    pointer-events: none;
-    opacity: 0.6;
-    cursor: default;
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: default;
 }
 
 .footer-bottom {
@@ -223,7 +221,7 @@ footer{
   color: #888;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for tablets and smaller desktops */
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
@@ -238,6 +236,44 @@ footer{
   .footer-section h3::after {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  /* Adjust font sizes for better readability on smaller screens */
+  .footer-section h3 {
+    font-size: 1.1em; /* Slightly smaller headings */
+  }
+
+  .footer-section p,
+  .footer-section ul li,
+  .footer-section ul li a {
+    font-size: 0.9em; /* Slightly smaller body text and list items */
+  }
+
+  .footer-bottom {
+    font-size: 0.8em; /* Smaller footer bottom text */
+  }
+}
+
+/* Further adjustments for very small mobile devices */
+@media (max-width: 480px) {
+  footer{
+    padding: 0;
+  }
+  .footer-content{
+      padding: 0;
+  }
+  .footer-section h3 {
+    font-size: 1em; /* Even smaller headings for tiny screens */
+  }
+
+  .footer-section p,
+  .footer-section ul li,
+  .footer-section ul li a {
+    font-size: 0.85em; /* Even smaller body text and list items */
+  }
+
+  .footer-bottom {
+    font-size: 0.75em; /* Even smaller footer bottom text */
   }
 }
 
