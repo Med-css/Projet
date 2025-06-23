@@ -47,11 +47,11 @@
                 </a>
             </div>
 
-            <div class="headerCard">
-                <a href="#">
-                    <div class="cardIcon" style="display: none;">
-                        <img src="./img/editimage.png" alt="Other Tools Icon">
-                        <p>Other Tools</p>
+            <div class="headerCard" id="mockup">
+                <a href="mockupgenerator">
+                    <div class="cardIcon">
+                        <img src="./img/videodownloader.png" alt="mockup Icon">
+                        <p>Générateur Mockup</p>
                     </div>
                 </a>
             </div>

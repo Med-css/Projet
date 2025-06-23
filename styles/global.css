@@ -411,6 +411,9 @@ nav {
 #downloadvideos {
   background: linear-gradient(145deg, #FFB3C6 0%, #FF8FA3 100%);
 }
+#mockup{
+  background-color: #FFD6A5;
+}
 
 .headerCard#editingimages .cardIcon p {
   background-color: #64B5F6 !important;
@@ -423,6 +426,10 @@ nav {
 .headerCard#downloadvideos .cardIcon p {
   background-color: #FF6F91 !important;
 }
+.headerCard#mockup .cardIcon p {
+  background-color: #FFA860 !important;
+}
+
 
 main {
   padding: 30px;
