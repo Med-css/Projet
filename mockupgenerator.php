@@ -41,15 +41,15 @@
                 <h2>Sélectionnez le mockup idéal</h2>
                 <div class="listformat">
                     <div class="cardmockup">
-                        <img src="./img/mockupgenerator/mockup/ordinateur.png" alt="">
+                        <img src="./img/mockupgenerator/mockup/ordinateur.png" alt="Ordinateur">
                         <p class="format-description">Ordinateur</p>
                     </div>
                     <div class="cardmockup">
-                        <img src="./img/mockupgenerator/mockup/tablette.png" alt="">
+                        <img src="./img/mockupgenerator/mockup/tablette.png" alt="Tablette">
                         <p class="format-description">Tablette</p>
                     </div>
                     <div class="cardmockup">
-                        <img src="./img/mockupgenerator/mockup/telephone.png" alt="">
+                        <img src="./img/mockupgenerator/mockup/telephone.png" alt="Téléphone">
                         <p class="format-description">Téléphone</p>
                     </div>
                 </div>
@@ -59,16 +59,21 @@
             </div>
 
             <!-- PAGE 3 -->
-            <div class="page3 mockupscene" id="p3" style="display:none;">
+            <div class="page3 mockupscene" id="p3" style="display: none;">
+                <div class="leftmenu"></div>
+          <div class="canvascene" id="canvas-container">
+  <div id="mockupcanvas" class="mockupcanvas"></div>
+</div>
 
-                
+                <div class="rightmenu"></div>
             </div>
         </section>
     </div>
 </main>
 <?php require 'Footer.php'; ?>
-
+<script src="https://unpkg.com/konva@9.3.0/konva.min.js"></script>
 <script>
+
 document.addEventListener('DOMContentLoaded', () => {
     const page1 = document.getElementById('p1');
     const page2 = document.getElementById('p2');
@@ -126,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     continueBtnP2.addEventListener('click', () => {
         if (!continueBtnP2.disabled) {
             page2.style.display = 'none';
-            page3.style.display = 'block';
+            page3.style.display = 'flex';
             initializeCanvas();
         }
     });
@@ -135,72 +140,145 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeCanvas() {
-    const canvasElement = document.getElementById('mockupCanvas');
-    const previewArea = document.querySelector('.mockup-preview-area');
-    const dpr = window.devicePixelRatio || 1;
+    const container = document.getElementById('mockupcanvas');
+    if (!container) return;
 
-    const canvas = new fabric.Canvas('mockupCanvas', {
-        selection: false,
-        hoverCursor: 'default',
-    });
+    const selectedFormatCard = document.querySelector('.cardformat.active');
+    if (!selectedFormatCard) return;
 
-    function resizeCanvas() {
-        const windowHeight = window.innerHeight;
-        const headerHeight = 100; // Assurez-vous que cela correspond à la hauteur réelle de votre header
-        const availableHeight = windowHeight - headerHeight;
+    const ratioText = selectedFormatCard.querySelector('.format-ratio').textContent.trim();
 
-        const rect = previewArea.getBoundingClientRect();
-        let width = rect.width;
-        let height = availableHeight;
-
-        if (width === 0 || height === 0) {
-            setTimeout(resizeCanvas, 50);
-            return;
-        }
-
-        canvasElement.style.width = width + 'px';
-        canvasElement.style.height = height + 'px';
-
-        canvasElement.width = width * dpr;
-        canvasElement.height = height * dpr;
-
-        const ctx = canvas.contextContainer;
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.scale(dpr, dpr);
-
-        // Redimensionner en fonction du format choisi
-        const selectedFormat = document.querySelector('.cardformat.active .format-ratio').textContent;
-        adjustCanvasToFormat(canvas, selectedFormat, width, height);
+    container.classList.remove('square', 'desktop', 'mobile');
+    if (ratioText === '1:1') {
+        container.classList.add('square');
+    } else if (ratioText === '16:9') {
+        container.classList.add('desktop');
+    } else if (ratioText === '9:16') {
+        container.classList.add('mobile');
     }
 
-    function adjustCanvasToFormat(canvas, format, maxWidth, maxHeight) {
-        switch (format) {
-            case '1:1':
-                const size = Math.min(maxWidth, maxHeight);
-                canvas.setWidth(size);
-                canvas.setHeight(size);
-                break;
-            case '16:9':
-                const width169 = maxWidth;
-                const height169 = width169 * 9 / 16;
-                canvas.setWidth(width169);
-                canvas.setHeight(height169);
-                break;
-            case '9:16':
-                const height916 = maxHeight;
-                const width916 = height916 * 9 / 16;
-                canvas.setWidth(width916);
-                canvas.setHeight(height916);
-                break;
-            default:
-                canvas.setWidth(maxWidth);
-                canvas.setHeight(maxHeight);
+    function resizeStage() {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        if (!window.kStage) {
+            window.kStage = new Konva.Stage({
+                container: 'mockupcanvas',
+                width: width,
+                height: height,
+            });
+
+            const layer = new Konva.Layer();
+            window.kStage.add(layer);
+
+            const selectedMockupCard = document.querySelector('.cardmockup.active');
+            const mockupImageSrc = selectedMockupCard ? selectedMockupCard.querySelector('img').src : '';
+            const mockupType = selectedMockupCard ? selectedMockupCard.querySelector('p.format-description').textContent.toLowerCase() : '';
+
+            if (mockupImageSrc) {
+                const imageObj = new Image();
+                imageObj.onload = function () {
+                    const scale = Math.min(
+                        width / imageObj.width,
+                        height / imageObj.height
+                    );
+
+                    const imgWidth = imageObj.width * scale;
+                    const imgHeight = imageObj.height * scale;
+                    const imgX = (width - imgWidth) / 2;
+                    const imgY = (height - imgHeight) / 2;
+
+                    // Offset en % responsive selon type mockup
+                    let offsetPercent = 0;
+                    if (mockupType.includes('ordinateur')) {
+                        offsetPercent = 0.22; // 15%
+                    } else if (mockupType.includes('téléphone')) {
+                        offsetPercent = 0.45; // 5%
+                    } else if (mockupType.includes('tablette')) {
+                        offsetPercent = 0.30; // 10%
+                    }
+
+                    const widthOffset = imgWidth * offsetPercent;
+                    const rectWidth = imgWidth - widthOffset;
+                    const rectX = (width - rectWidth) / 2;
+
+                    // Créer le rectangle blanc (fond)
+                    const backgroundRect = new Konva.Rect({
+                        x: rectX,
+                        y: imgY,
+                        width: rectWidth,
+                        height: imgHeight,
+                        fill: 'white',
+                        name: 'background-rect',
+                    });
+
+                    // Créer l'image Konva
+                    const konvaImage = new Konva.Image({
+                        image: imageObj,
+                        x: imgX,
+                        y: imgY,
+                        width: imgWidth,
+                        height: imgHeight,
+                        name: 'mockup-image',
+                    });
+
+                    layer.add(backgroundRect);
+                    layer.add(konvaImage);
+                    layer.draw();
+                };
+                imageObj.src = mockupImageSrc;
+            }
+        } else {
+            window.kStage.width(width);
+            window.kStage.height(height);
+
+            const image = window.kStage.findOne('.mockup-image');
+            const backgroundRect = window.kStage.findOne('.background-rect');
+
+            const selectedMockupCard = document.querySelector('.cardmockup.active');
+            const mockupType = selectedMockupCard ? selectedMockupCard.querySelector('p.format-description').textContent.toLowerCase() : '';
+
+            if (image && backgroundRect) {
+                const scale = Math.min(
+                    width / image.image().width,
+                    height / image.image().height
+                );
+
+                const imgWidth = image.image().width * scale;
+                const imgHeight = image.image().height * scale;
+                const imgX = (width - imgWidth) / 2;
+                const imgY = (height - imgHeight) / 2;
+
+                let offsetPercent = 0;
+                if (mockupType.includes('ordinateur')) {
+                    offsetPercent = 0.22; // 15%
+                } else if (mockupType.includes('téléphone')) {
+                    offsetPercent = 0.45; // 5%
+                } else if (mockupType.includes('tablette')) {
+                    offsetPercent = 0.30; // 10%
+                }
+
+                const widthOffset = imgWidth * offsetPercent;
+                const rectWidth = imgWidth - widthOffset;
+                const rectX = (width - rectWidth) / 2;
+
+                image.width(imgWidth);
+                image.height(imgHeight);
+                image.x(imgX);
+                image.y(imgY);
+
+                backgroundRect.width(rectWidth);
+                backgroundRect.height(imgHeight);
+                backgroundRect.x(rectX);
+                backgroundRect.y(imgY);
+            }
+
+            window.kStage.draw();
         }
-        canvas.renderAll();
     }
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    resizeStage();
+    window.addEventListener('resize', resizeStage);
 }
+
 </script>
-<script src="https://cdn.jsdelivr.net/npm/fabric@5.2.4/dist/fabric.min.js"></script>

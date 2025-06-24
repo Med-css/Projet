@@ -222,14 +222,89 @@
 }
 
 
- .mockupscene {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #1a1a1a; /* Dark background for the scene */
-            z-index: 1000;
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Arrange children vertically first */
-        }
+.mockupscene {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #1a1a1a; /* fond sombre */
+  z-index: 1000;
+
+  display: flex;        /* ligne horizontale */
+  flex-direction: row;  /* horizontal */
+  align-items: stretch; /* hauteur égale */
+}
+
+.leftmenu, .rightmenu {
+  width: 200px;            /* largeur fixe */
+  background-color: #222;  /* un peu plus clair que le fond */
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;        /* scroll si contenu trop grand */
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  display: flex;
+}
+
+.leftmenu {
+  left: 0;
+}
+
+.rightmenu {
+  right: 0;
+}
+
+.canvascene {
+  margin-left: 200px;   /* espace laissé pour leftmenu */
+  margin-right: 200px;  /* espace laissé pour rightmenu */
+  background-color: #F4F6F8;
+  flex-grow: 1;         /* prend toute la place restante */
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  min-height: 100vh;
+}
+#mockupcanvas {
+  background: linear-gradient(135deg, #ff5f6d, #ff00cc, #3333ff);
+
+  display: flex; /* pour enlever les espaces inline */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+
+
+  margin: auto;
+  border-radius: 12px;
+  box-shadow:
+    0 8px 15px rgba(0,0,0,0.3),
+    0 15px 30px rgba(0,0,0,0.2),
+    0 25px 50px rgba(0,0,0,0.15),
+    inset 0 -5px 10px rgba(0,0,0,0.1);
+  /* Pour renforcer l’effet 3D tu peux ajouter un léger dégradé ou un contour */
+  /* Par exemple un contour sombre */
+  border: 1px solid rgba(0,0,0,0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+#mockupcanvas.desktop{
+    width: 90%;
+    max-width: 90%;
+  aspect-ratio: 16/9;
+}
+#mockupcanvas.square{
+    width: 60%;
+    max-width: 60%;
+  aspect-ratio: 1/1;
+}
+#mockupcanvas.mobile{
+  aspect-ratio: 9/16;
+  height: 95%;
+  max-height: 95%;
+}
