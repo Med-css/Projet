@@ -5,17 +5,23 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y \
         # Install required packages
+        curl \
         ffmpeg \
         ghostscript \
         imagemagick \
+        jq \
         libmagickwand-dev \
         libreoffice \
         libreoffice-writer \
         libzip-dev \
         p7zip-full \
+        python3 \
         unoconv \
         unzip \
         zip && \
+    # YT-DLP installation
+    curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && \
+    chmod a+rx /usr/local/bin/yt-dlp && \
     # Clean up apt cache
     rm -rf /var/lib/apt/lists/* && \
     # Install PHP extensions

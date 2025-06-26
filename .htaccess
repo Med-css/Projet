@@ -1,5 +1,7 @@
 RewriteEngine On
 
+RewriteRule ^logs/ - [F,L]
+
 # Exclure un convert.php de la redirection
 # RewriteCond %{REQUEST_URI} !^/convert\.php$ [NC]
 

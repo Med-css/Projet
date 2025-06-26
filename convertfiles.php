@@ -223,6 +223,40 @@ require 'Header.php'; ?>
     </div>
 
 <script>
+    function createPreview(file, url) {
+        let el;
+        const type = file.type;
+
+        if (type.startsWith('image/')) {
+            el = document.createElement('img');
+            el.src = url;
+            el.style.maxWidth = '100%';
+            el.style.maxHeight = '200px';
+        } else if (type.startsWith('video/')) {
+            el = document.createElement('video');
+            el.src = url;
+            el.controls = true;
+            el.style.maxWidth = '100%';
+            el.style.maxHeight = '200px';
+        } else if (type.startsWith('audio/')) {
+            el = document.createElement('audio');
+            el.src = url;
+            el.controls = true;
+        } else if (type === 'application/pdf') {
+            el = document.createElement('embed');
+            el.src = url;
+            el.type = 'application/pdf';
+            el.style.width = '100%';
+            el.style.height = '200px';
+        } else {
+            el = document.createElement('p');
+            el.textContent = `Fichier : ${file.name}`;
+        }
+
+        return el;
+    }
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const typeButtons = document.querySelectorAll('.type-button');
         const conversionOptions = document.querySelectorAll('.conversion-options');
@@ -283,25 +317,43 @@ require 'Header.php'; ?>
                     link.classList.add('disabled-link'); // pour éventuel style CSS
                 });
 
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 45000); // 45s timeout
+
                 try {
                     const res = await fetch('convert', {
                         method: 'POST',
-                        body: formData
+                        body: formData,
+                        signal: controller.signal
                     });
 
-                    if (res.ok) {
-                        const blob = await res.blob();
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `${file.name.split('.')[0]}.${select.value}`;
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                    } else {
+                    clearTimeout(timeout);
+
+                    if (!res.ok) {
                         const errorText = await res.text();
-                        alert("Erreur de conversion : " + errorText);
+                        if (res.status === 413) {
+                            alert("Le fichier est trop volumineux. Veuillez essayer avec un fichier plus petit.\nErreur : " + errorText);
+                            return;
+                        }
+                        else if (res.status === 500) {
+                            alert("Erreur interne du serveur. Veuillez réessayer plus tard.\nErreur : " + errorText);
+                            return;
+                        }
+                        else {
+                            alert("Erreur lors de la conversion.\nCode HTTP : " + res.status + " - " + errorText);
+                            return;
+                        }
                     }
+
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${file.name.split('.')[0]}.${select.value}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
                 } catch (err) {
                     alert("Erreur réseau : " + err.message);
                 } finally {
@@ -413,7 +465,6 @@ require 'Header.php'; ?>
                 span.style.display   = 'none';
                 icon.style.display   = 'none';
 
-                // 5) Vérification de validité de l'extension
                 if (!allowed.includes(ext)) {
                     preview.innerHTML = `<p style="color: red;">Extension invalide : ${file.name}</p>`;
                     input.value = '';           // reset pour pouvoir re-sélectionner
@@ -422,37 +473,9 @@ require 'Header.php'; ?>
                     return;
                 }
 
-                // 6) Affichage de l'aperçu
                 const url = URL.createObjectURL(file);
-                let element;
-                if (file.type.startsWith('image/')) {
-                    element = document.createElement('img');
-                    element.src = url;
-                    element.style.maxWidth  = '100%';
-                    element.style.maxHeight = '200px';
-                } else if (file.type.startsWith('video/')) {
-                    element = document.createElement('video');
-                    element.src = url;
-                    element.controls = true;
-                    element.style.maxWidth  = '100%';
-                    element.style.maxHeight = '200px';
-                } else if (file.type.startsWith('audio/')) {
-                    element = document.createElement('audio');
-                    element.src = url;
-                    element.controls = true;
-                } else if (file.type === 'application/pdf') {
-                    element = document.createElement('embed');
-                    element.src  = url;
-                    element.type = 'application/pdf';
-                    element.style.width  = '100%';
-                    element.style.height = '200px';
-                } else {
-                    element = document.createElement('p');
-                    element.textContent = `Fichier : ${file.name}`;
-                }
-                preview.appendChild(element);
+                preview.appendChild(createPreview(file, url));
 
-                // 7) Charger le fichier dans l'input pour soumission éventuelle
                 input.files = e.target.files;
             });
 
@@ -536,33 +559,7 @@ require 'Header.php'; ?>
                 }
 
                 const fileURL = URL.createObjectURL(file);
-                let element;
-                if (file.type.startsWith('image/')) {
-                    element = document.createElement('img');
-                    element.src = fileURL;
-                    element.style.maxWidth = '100%';
-                    element.style.maxHeight = '200px';
-                } else if (file.type.startsWith('video/')) {
-                    element = document.createElement('video');
-                    element.src = fileURL;
-                    element.controls = true;
-                    element.style.maxWidth = '100%';
-                    element.style.maxHeight = '200px';
-                } else if (file.type.startsWith('audio/')) {
-                    element = document.createElement('audio');
-                    element.src = fileURL;
-                    element.controls = true;
-                } else if (file.type === 'application/pdf') {
-                    element = document.createElement('embed');
-                    element.src = fileURL;
-                    element.type = 'application/pdf';
-                    element.style.width = '100%';
-                    element.style.height = '200px';
-                } else {
-                    element = document.createElement('p');
-                    element.textContent = `Fichier : ${file.name}`;
-                }
-                preview.appendChild(element);
+                preview.appendChild(createPreview(file, fileURL));
 
                 input.files = e.dataTransfer.files;
             });
