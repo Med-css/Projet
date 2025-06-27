@@ -7,9 +7,10 @@
         <div class="footer-section links">
             <h3>Liens Rapides</h3>
             <ul>
-                <li><a href="#">Édition d'images</a></li>
-                <li><a href="#">Conversion de fichiers</a></li>
-                <li><a href="#">Téléchargement de vidéos</a></li>
+                <li><a href="editimage">Édition d'images</a></li>
+                <li><a href="convertfiles">Conversion de fichiers</a></li>
+                <li><a href="videodownloader">Téléchargement de vidéos</a></li>
+                <li><a href="mockupgenerator">Générateur Mockup</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">Politique de confidentialité</a></li>
             </ul>
