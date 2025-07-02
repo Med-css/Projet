@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /Footer.php
+Disallow: /Header.php
+Disallow: /Accueil.php
+Disallow: /convert.php
+Disallow: /download.php
+Disallow: /scrapevideo.php
+Disallow: /logs
+Allow: /
+Sitemap: http://localhost:8082/sitemap.xml
